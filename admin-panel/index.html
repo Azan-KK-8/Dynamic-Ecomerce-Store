@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | NovaStore</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --green: #b6ff4a;
+      --green-dark: #85c928;
+      --black: #080c09;
+      --card: #111813;
+      --text: #f1f5ef;
+      --muted: #89958b;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+
+      background:
+        radial-gradient(circle at 15% 20%, #b6ff4a18, transparent 35%),
+        radial-gradient(circle at 85% 80%, #70b92b15, transparent 35%),
+        #080c09;
+
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND DECORATION */
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    body::before {
+      background: var(--green);
+      top: -120px;
+      left: -100px;
+    }
+
+    body::after {
+      background: #4caa28;
+      bottom: -120px;
+      right: -100px;
+    }
+
+    /* MAIN CONTAINER */
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 950px;
+      min-height: 550px;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      background: #111813;
+      border: 1px solid #29382a;
+      border-radius: 28px;
+      overflow: hidden;
+
+      box-shadow:
+        0 35px 100px #00000080,
+        0 0 50px #b6ff4a0a;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LEFT PANEL */
+
+    .brand-panel {
+      padding: 55px 45px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      background:
+        radial-gradient(circle at 20% 20%, #b6ff4a20, transparent 55%),
+        linear-gradient(145deg, #18251a, #0d130f);
+
+      border-right: 1px solid #29382a;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 43px;
+      height: 43px;
+      border-radius: 13px;
+
+      display: grid;
+      place-items: center;
+
+      background: var(--green);
+      color: #10170c;
+      font-size: 23px;
+    }
+
+    .logo span:last-child {
+      color: var(--green);
+    }
+
+    .brand-content h1 {
+      font-size: 43px;
+      line-height: 1.2;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .brand-content h1 span {
+      color: var(--green);
+    }
+
+    .brand-content p {
+      color: #a5b0a4;
+      font-size: 14px;
+      line-height: 1.9;
+      max-width: 330px;
+    }
+
+    .brand-footer {
+      color: #687568;
+      font-size: 12px;
+    }
+
+    /* RIGHT PANEL */
+
+    .form-panel {
+      padding: 65px 50px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .form-panel h2 {
+      font-size: 31px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .form-panel .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 38px;
+      line-height: 1.7;
+    }
+
+    /* FORM */
+
+    #form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+    }
+
+    .input-group {
+      width: 100%;
+    }
+
+    .input-group label {
+      display: block;
+      color: #d8e0d5;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    #form input {
+      width: 100%;
+      height: 54px;
+      padding: 0 17px;
+
+      border-radius: 12px;
+      border: 1px solid #29382d;
+
+      background: #0b110d;
+      color: white;
+      outline: none;
+
+      font-size: 13px;
+      transition: 0.3s;
+    }
+
+    #form input::placeholder {
+      color: #69766a;
+    }
+
+    #form input:hover {
+      border-color: #638a40;
+    }
+
+    #form input:focus {
+      border-color: var(--green);
+      background: #101a12;
+
+      box-shadow: 0 0 0 4px #b6ff4a16;
+    }
+
+    /* BUTTON */
+
+    #btn {
+      width: 100%;
+      height: 54px;
+      margin-top: 8px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: linear-gradient(115deg,
+          #85c928,
+          #b6ff4a,
+          #d2ff83);
+
+      color: #10170c;
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+      transition: 0.3s;
+
+      box-shadow: 0 10px 28px #b6ff4a20;
+    }
+
+    #btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px #b6ff4a40;
+      filter: brightness(1.08);
+    }
+
+    #btn:active {
+      transform: scale(0.98);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 700px) {
+      body {
+        padding: 18px;
+      }
+
+      .login-wrapper {
+        max-width: 450px;
+        grid-template-columns: 1fr;
+      }
+
+      .brand-panel {
+        min-height: 220px;
+        padding: 30px;
+        gap: 30px;
+      }
+
+      .brand-content h1 {
+        font-size: 30px;
+      }
+
+      .brand-content p {
+        font-size: 12px;
+      }
+
+      .brand-footer {
+        display: none;
+      }
+
+      .form-panel {
+        padding: 38px 28px;
+      }
+
+      .form-panel h2 {
+        font-size: 27px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .form-panel {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-wrapper">
+
+    <!-- LEFT BRAND SECTION -->
+
+    <div class="brand-panel">
+
+      <div class="logo">
+        <div class="logo-icon">N</div>
+        Luxe<span>.</span>
+      </div>
+
+      <div class="brand-content">
+        <h1>Welcome Back to <span>Luxe.</span></h1>
+
+        <p>
+          Your premium shopping experience starts here.
+          Sign in to manage your store and explore
+          everything in one place.
+        </p>
+      </div>
+
+      <div class="brand-footer">
+        © 2026 NovaStore. All rights reserved.
+      </div>
+
+    </div>
+
+    <!-- RIGHT LOGIN SECTION -->
+
+    <div class="form-panel">
+
+      <h2>Sign In</h2>
+
+      <p class="subtitle">
+        Enter your account details to continue.
+      </p>
+
+      <form action="" id="form">
+
+        <div class="input-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+
+        <button type="submit" id="btn">
+          Sign In →
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+
+</body>
+
+</html>

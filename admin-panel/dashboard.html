@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | NovaStore</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --bg: #080b09;
+      --sidebar: #0d120e;
+      --card: #111713;
+      --card-hover: #172019;
+      --green: #b6ff4a;
+      --green-dark: #91d52e;
+      --text: #f1f5ef;
+      --muted: #89958b;
+      --border: #253128;
+      --danger: #ff626c;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 255px;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: var(--sidebar);
+      padding: 28px 18px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 8px;
+      margin-bottom: 55px;
+    }
+
+    .logo-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--green);
+      color: #10170c;
+      font-size: 21px;
+      font-weight: 900;
+      box-shadow: 0 0 22px #b6ff4a25;
+    }
+
+    .logo h2 {
+      font-size: 19px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .logo h2 span {
+      color: var(--green);
+    }
+
+    .menu-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+      color: #667268;
+      margin: 0 12px 16px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 14px;
+      color: #9ba69d;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 11px;
+      transition: .3s;
+    }
+
+    .nav a .icon {
+      width: 23px;
+      text-align: center;
+      font-size: 19px;
+    }
+
+    .nav a:hover {
+      background: #1a251c;
+      color: var(--green);
+      transform: translateX(3px);
+    }
+
+    .nav a.active {
+      background: var(--green);
+      color: #10170c;
+      font-weight: 800;
+      box-shadow: 0 6px 22px #b6ff4a20;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 9px 7px;
+      margin-bottom: 13px;
+    }
+
+    .avatar {
+      width: 41px;
+      height: 41px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #263522;
+      color: var(--green);
+      font-weight: 800;
+      border: 1px solid #425d32;
+    }
+
+    .profile h4 {
+      font-size: 12px;
+      color: white;
+    }
+
+    .profile p {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .logout {
+      width: 100%;
+      border: 1px solid var(--border);
+      padding: 12px;
+      background: #151c17;
+      color: #aab5ac;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .logout:hover {
+      background: #35191b;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* MAIN */
+
+    .main {
+      margin-left: 255px;
+      padding: 32px 38px;
+      min-height: 100vh;
+      width: calc(100% - 255px);
+      max-width: 1700px;
+    }
+
+    /* TOPBAR */
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .topbar h1 {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .topbar p {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 7px;
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .date-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* WELCOME BANNER */
+
+    .welcome {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 20%, #b6ff4a22, transparent 30%),
+        linear-gradient(110deg, #172319, #111a13 65%, #1b291a);
+      border: 1px solid #3b512e;
+      border-radius: 19px;
+      padding: 32px;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .welcome::before {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: 100px;
+      top: -140px;
+      border: 30px solid #b6ff4a12;
+      border-radius: 50%;
+    }
+
+    .welcome::after {
+      content: "✦";
+      position: absolute;
+      right: 65px;
+      bottom: -35px;
+      color: #b6ff4a13;
+      font-size: 140px;
+      transform: rotate(15deg);
+    }
+
+    .welcome-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome small {
+      font-size: 10px;
+      color: var(--green);
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .welcome h2 {
+      font-size: 25px;
+      margin: 12px 0;
+      font-weight: 800;
+    }
+
+    .welcome p {
+      font-size: 11px;
+      color: #a5b1a6;
+      line-height: 1.9;
+      max-width: 550px;
+    }
+
+    .welcome .add-btn {
+      display: inline-block;
+      margin-top: 19px;
+      background: var(--green);
+      color: #10170c;
+      text-decoration: none;
+      padding: 12px 19px;
+      border-radius: 9px;
+      font-size: 10px;
+      font-weight: 800;
+      transition: .3s;
+    }
+
+    .welcome .add-btn:hover {
+      background: white;
+      transform: translateY(-3px);
+      box-shadow: 0 7px 18px #b6ff4a30;
+    }
+
+    /* SECTION TITLE */
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .section-title p {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 21px;
+      transition: .3s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: #536b3b;
+      background: var(--card-hover);
+      box-shadow: 0 12px 28px #00000035;
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 19px;
+    }
+
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      background: #26351f;
+      color: var(--green);
+      border: 1px solid #435b31;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .stat-card h2 {
+      font-size: 25px;
+      font-weight: 800;
+      margin: 10px 0 8px;
+      overflow-wrap: anywhere;
+      color: white;
+    }
+
+    .stat-card span {
+      color: #718074;
+      font-size: 9px;
+    }
+
+    /* CONTENT GRID */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 19px;
+      margin-bottom: 25px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 23px;
+    }
+
+    .panel-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .panel-heading h3 {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .panel-heading p {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    /* OVERVIEW */
+
+    .overview {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .overview h2 {
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--green);
+      margin-top: 7px;
+    }
+
+    .overview span {
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    .overview-badge {
+      padding: 8px 11px;
+      background: #24321e;
+      border: 1px solid #435b31;
+      color: var(--green) !important;
+      border-radius: 8px;
+      font-size: 9px !important;
+      font-weight: 700;
+    }
+
+    /* CHART */
+
+    .chart {
+      height: 165px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      gap: 12px;
+      padding: 10px 5px 0;
+      border-bottom: 1px solid var(--border);
+      background: repeating-linear-gradient(to bottom,
+          transparent 0,
+          transparent 37px,
+          #ffffff09 38px);
+    }
+
+    .chart-column {
+      height: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .bar {
+      width: 65%;
+      max-width: 35px;
+      border-radius: 7px 7px 2px 2px;
+      background: linear-gradient(180deg, #d1ff85, #83c92c);
+      box-shadow: 0 0 15px #b6ff4a15;
+      transition: .3s;
+    }
+
+    .bar:hover {
+      filter: brightness(1.2);
+      box-shadow: 0 0 18px #b6ff4a40;
+    }
+
+    .chart-column small {
+      font-size: 9px;
+      color: #829084;
+      padding-bottom: 9px;
+    }
+
+    /* QUICK ACTIONS */
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .action-card {
+      padding: 17px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      color: var(--text);
+      background: #0d130e;
+      transition: .3s;
+    }
+
+    .action-card:hover {
+      border-color: #526b39;
+      background: #1a2519;
+      transform: translateY(-3px);
+    }
+
+    .action-icon {
+      width: 39px;
+      height: 39px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #26351f;
+      color: var(--green);
+      border: 1px solid #435b31;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .action-card h4 {
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .action-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    /* ORDERS */
+
+    .orders-panel {
+      margin-bottom: 23px;
+    }
+
+    .view-btn {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .view-btn:hover {
+      color: white;
+    }
+
+    .table-box {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    thead {
+      background: #19221a;
+    }
+
+    th {
+      color: #89978b;
+      font-size: 9px;
+      padding: 15px;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 16px 15px;
+      font-size: 10px;
+      color: #aab6ac;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:hover {
+      background: #182119;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #748176;
+    }
+
+    /* FOOTER */
+
+    footer {
+      text-align: center;
+      color: #657167;
+      font-size: 10px;
+      padding: 20px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:1200px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:750px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+      }
+
+      .logo {
+        margin-bottom: 25px;
+      }
+
+      .nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sidebar-bottom {
+        margin-top: 20px;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 22px 15px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .topbar h1 {
+        font-size: 21px;
+      }
+
+      .welcome {
+        padding: 24px 20px;
+      }
+
+      .welcome h2 {
+        font-size: 20px;
+      }
+
+      .stats {
+        gap: 12px;
+      }
+
+      .stat-card {
+        padding: 16px;
+      }
+
+      .stat-card h2 {
+        font-size: 21px;
+      }
+
+      .panel {
+        padding: 17px;
+      }
+    }
+
+    @media(max-width:380px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      <div class="logo-icon">L</div>
+      <h2>Luxe<span>.</span></h2>
+    </div>
+
+    <p class="menu-title">MAIN MENU</p>
+
+    <nav class="nav">
+
+      <a href="dashboard.html" class="active">
+        <span class="icon">⌂</span>
+        Dashboard
+      </a>
+
+      <a href="Addproduct.html">
+        <span class="icon">＋</span>
+        Add Product
+      </a>
+
+      <a href="AllProduct.html">
+        <span class="icon">▦</span>
+        All Products
+      </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+      <div class="profile">
+        <div class="avatar">A</div>
+
+        <div>
+          <h4>Admin User</h4>
+          <p>Store Administrator</p>
+        </div>
+      </div>
+
+      <button class="logout" id="logoutBtn">
+        ↪ Logout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+
+  <main class="main">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+      <div>
+        <h1>Dashboard Overview</h1>
+        <p>Here's what's happening with your store today.</p>
+      </div>
+
+      <div class="top-right">
+        <div class="date-box">✦ Admin Panel</div>
+      </div>
+
+    </header>
+
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+      <div class="welcome-content">
+
+        <small>WELCOME BACK, ADMIN 👋</small>
+
+        <h2>Manage Your Store With Ease</h2>
+
+        <p>
+          Everything you need to manage your products,
+          orders and store performance in one place.
+        </p>
+
+        <a href="Addproduct.html" class="add-btn">
+          + Add New Product
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <div class="section-title">
+      <div>
+        <h2>Store Statistics</h2>
+        <p>Your store at a glance</p>
+      </div>
+    </div>
+
+    <section class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div class="stat-icon">▦</div>
+        </div>
+
+        <p class="stat-label">Total Products</p>
+        <h2 id="totalProducts">0</h2>
+        <span>Products in your store</span>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div class="stat-icon">▤</div>
+        </div>
+
+        <p class="stat-label">Total Orders</p>
+        <h2 id="totalOrders">0</h2>
+        <span>Orders received</span>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div class="stat-icon">♙</div>
+        </div>
+
+        <p class="stat-label">Total Customers</p>
+        <h2 id="totalCustomers">0</h2>
+        <span>Registered customers</span>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+          <div class="stat-icon">₨</div>
+        </div>
+
+        <p class="stat-label">Total Revenue</p>
+        <h2 id="totalRevenue">₨ 0</h2>
+        <span>Revenue from orders</span>
+
+      </div>
+
+    </section>
+
+
+    <!-- OVERVIEW + QUICK ACTIONS -->
+
+    <section class="content-grid">
+
+      <!-- SALES OVERVIEW -->
+
+      <div class="panel">
+
+        <div class="panel-heading">
+          <div>
+            <h3>Sales Overview</h3>
+            <p>Your store performance</p>
+          </div>
+        </div>
+
+        <div class="overview">
+          <div>
+            <span>Revenue Overview</span>
+            <h2>₨ 0</h2>
+          </div>
+
+          <span class="overview-badge">Store Analytics</span>
+        </div>
+
+        <div class="chart">
+
+          <div class="chart-column">
+            <div class="bar" style="height:35%"></div>
+            <small>Mon</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:60%"></div>
+            <small>Tue</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:45%"></div>
+            <small>Wed</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:80%"></div>
+            <small>Thu</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:55%"></div>
+            <small>Fri</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:90%"></div>
+            <small>Sat</small>
+          </div>
+
+          <div class="chart-column">
+            <div class="bar" style="height:70%"></div>
+            <small>Sun</small>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- QUICK ACTIONS -->
+
+      <div class="panel">
+
+        <div class="panel-heading">
+          <div>
+            <h3>Quick Actions</h3>
+            <p>Shortcuts to manage your store</p>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+
+          <a href="Addproduct.html" class="action-card">
+
+            <div class="action-icon">＋</div>
+
+            <div>
+              <h4>Add Product</h4>
+              <p>Create a new product</p>
+            </div>
+
+          </a>
+
+          <a href="AllProduct.html" class="action-card">
+
+            <div class="action-icon">▦</div>
+
+            <div>
+              <h4>Products</h4>
+              <p>Manage your products</p>
+            </div>
+
+          </a>
+
+          <a href="orders.html" class="action-card">
+
+            <div class="action-icon">▤</div>
+
+            <div>
+              <h4>Orders</h4>
+              <p>View customer orders</p>
+            </div>
+
+          </a>
+
+          <a href="dashboard.html" class="action-card">
+
+            <div class="action-icon">⌂</div>
+
+            <div>
+              <h4>Dashboard</h4>
+              <p>View store overview</p>
+            </div>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RECENT ORDERS -->
+
+    <section class="panel orders-panel">
+
+      <div class="panel-heading">
+
+        <div>
+          <h3>Recent Orders</h3>
+          <p>Latest orders from your store</p>
+        </div>
+
+        <a href="orders.html" class="view-btn">
+          View All →
+        </a>
+
+      </div>
+
+      <div class="table-box">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
+              <th>CUSTOMER</th>
+              <th>AMOUNT</th>
+              <th>STATUS</th>
+            </tr>
+          </thead>
+
+          <tbody id="ordersTable">
+
+            <tr>
+              <td colspan="4" class="empty">
+                No orders to display yet.
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      © 2026 NovaStore. All rights reserved.
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+
+  </script>
+
+</body>
+
+</html>
